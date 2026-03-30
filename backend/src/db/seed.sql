@@ -1,0 +1,6 @@
+INSERT INTO products (name, description, price, image_url, stock) VALUES
+('Monstera Deliciosa', 'Tropische Zimmerpflanze mit großen gefensterten Blättern.', 24.99, 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Monstera_deliciosa2.jpg/800px-Monstera_deliciosa2.jpg', 15),
+('Aloe Vera', 'Pflegeleichte Sukkulente mit heilenden Eigenschaften.', 8.99, 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Aloe_vera_flower_inset.png/800px-Aloe_vera_flower_inset.png', 30),
+('Ficus Benjamina', 'Klassischer Zimmerstrauch, ideal für helle Räume.', 19.99, 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Ficus_benjamina2.jpg/800px-Ficus_benjamina2.jpg', 10),
+('Lavandula', 'Duftende Lavendelpflanze, perfekt für Balkon oder Fensterbank.', 6.99, 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Bee_landing_on_a_thistle.jpg/800px-Bee_landing_on_a_thistle.jpg', 25),
+('Kaktus Mix', 'Set aus 3 kleinen Kakteen, ideal für Anfänger.', 12.99, 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Cactus_-_1.jpg/800px-Cactus_-_1.jpg', 20);

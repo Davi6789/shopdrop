@@ -1,0 +1,88 @@
+
+
+Tag 1 hat 5 Schritte. Wir gehen einen nach dem anderen durch:
+✅ Schritt 1 — Repo & Ordnerstruktur
+✅ Schritt 2 — Express Server + DB-Verbindung
+
+backend
+
+bun add @types/express @types/cors -D
+// src/db/clinet.ts
+
+bun add pg
+bun add -D @types/pg
+// src/index.tsx
+backend/.env
+PORT=3001
+DATABASE_URL=postgresql://dci-student@localhost:5432/shopdrop
+FRONTEND_URL=http://localhost:3000
+🔄 Schritt 3 — schema.sql (sind wir gerade)
+psql -c "CREATE DATABASE shopdrop;"
+psql -l
+Im backend/src/db/ Ordner eine neue Datei schema.sql erstellen:
+
+psql shopdrop -f src/db/schema.sql
+```
+
+Das bedeutet: *„Öffne die Datenbank `shopdrop` und führe alle Befehle in `schema.sql` aus."*
+
+Du solltest das sehen:
+```
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+5. Prüfen ob die Tabellen da sind:
+psql shopdrop -c "\dt"
+```
+
+Erwartete Ausgabe:
+```
+ Schema |    Name     |
+--------+-------------+
+ public | order_items |
+ public | orders      |
+ public | products    |
+```
+
+---
+
+## Zusammenfassung des Ablaufs
+```
+VSCode (schema.sql schreiben)
+        ↓
+Terminal: psql shopdrop -f schema.sql
+        ↓
+PostgreSQL legt die Tabellen an
+
+sudo -u postgres psql -c 'ALTER USER "dci-student" WITH SUPERUSER;'
+psql -d postgres -c "\du" 
+                              List of roles
+  Role name  |                         Attributes                         
+-------------+------------------------------------------------------------
+ anton       | Superuser
+ david       | Superuser, Create role, Create DB, Bypass RLS
+ dci-student | Superuser
+die shopdrop Datenbank anlegen:
+psql -c "CREATE DATABASE shopdrop;"
+
+PW anlegen:
+postgres=# ALTER USER "dci-student" PASSWORD 'Dci123456#';
+\q
+
+⏳ Schritt 4 — Seed-Daten
+Erstelle die Datei src/db/seed.sql in VSCode
+Prüfen ob die Daten drin sind:
+psql shopdrop -c "SELECT id, name, price, stock FROM products;"
+
+⏳ Schritt 5 — API testen
+bauen die zwei Routen und starten den Server.
+Erstelle src/routes/products.ts in VSCode:
+Dann src/index.ts updaten — die Route einbinden:
+
+Tag 1 — Abgeschlossen! 🎉🌱
+Alles funktioniert perfekt:
+
+✅ GET /health → {"status":"ok","db":"connected"}
+✅ GET /products → alle 5 Pflanzen kommen zurück
+✅ GET /products/1 → einzelne Pflanze funktioniert
+
