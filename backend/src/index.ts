@@ -1,10 +1,11 @@
-// src/index.ts
+// backend/src/index.ts
 
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import pool from './db/client'; // Stelle sicher, dass die Datei in src/db/client.ts liegt!
 import productsRouter from './routes/products';
+import ordersRouter from './routes/orders';   // ← neu
 
 dotenv.config();
 
@@ -12,11 +13,12 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // CORS Konfiguration
-app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000' }));
+app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 
 // --- HIER DIE ROUTEN REGISTRIEREN ---
 app.use('/products', productsRouter);
+app.use('/orders', ordersRouter);              // ← neu
 
 // 1. Die richtige Root-Route für http://localhost:3001/
 app.get('/', (req: Request, res: Response) => {
