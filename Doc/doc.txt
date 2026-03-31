@@ -86,4 +86,13 @@ Alles funktioniert perfekt:
 ✅ GET /products → alle 5 Pflanzen kommen zurück
 ✅ GET /products/1 → einzelne Pflanze funktioniert
 
+
+1. neue product hinzufügen
+2. product bearbeiten
+3. product löschen
+4. bestellen
+
+06.https://github.com/dci-fw-tz-025-d01/materials/tree/main/09_database/13_todo_fullstack
+13. 
+
 Tag 2 bauen das Frontend — Bun + React + Tailwind + TypeScript. Du wirst dann zum ersten Mal deine Pflanzen im Browser sehen 🌿

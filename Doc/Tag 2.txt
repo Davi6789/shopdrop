@@ -1,0 +1,24 @@
+Tag 2 Di.31.03.26
+
+Tag 2 bauen das Frontend — Bun + React + Tailwind + TypeScript. Du wirst dann zum ersten Mal deine Pflanzen im Browser sehen 🌿
+
+cd ~/Antonio/Projekt/shopdrop/frontend
+bun create vite . --template react-ts
+
+bun install
+bun add -d tailwindcss @tailwindcss/vite
+Jetzt Tailwind konfigurieren. Öffne vite.config.ts und füge in zeile pluging tailwindcss und import tailwindcss from '@tailwindcss/vite' ein.
+
+Dann src/index.css — alles löschen und ersetzen mit:
+@import "tailwindcss";
+
+bun run dev dann sieht ➜  Local: http://localhost:5173/
+
+Schritt 2 — API Client + ProductList
+- API-Client anlegen und Erstelle src/api/client.ts
+- TypeScript-Typen anlegen. Erstelle src/types/index.ts
+- ProductList-Seite. Erstelle src/pages/Home.tsx
+
+Schritt 3 — ProductCard Komponente
+- Erstelle src/components/ProductCard.tsx
+- Jetzt src/App.tsx bearbeiten, löschen alles und fängt neu an
