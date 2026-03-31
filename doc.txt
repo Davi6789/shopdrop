@@ -86,3 +86,4 @@ Alles funktioniert perfekt:
 ✅ GET /products → alle 5 Pflanzen kommen zurück
 ✅ GET /products/1 → einzelne Pflanze funktioniert
 
+Tag 2 bauen das Frontend — Bun + React + Tailwind + TypeScript. Du wirst dann zum ersten Mal deine Pflanzen im Browser sehen 🌿

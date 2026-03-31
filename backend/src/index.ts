@@ -18,7 +18,11 @@ app.use(express.json());
 // --- HIER DIE ROUTEN REGISTRIEREN ---
 app.use('/products', productsRouter);
 
-// Health-Check Route
+// 1. Die richtige Root-Route für http://localhost:3001/
+app.get('/', (req: Request, res: Response) => {
+  res.send('Willkommen beim ShopDrop API-Server! 🚀');
+});
+// 2. Health-Check Route
 app.get('/health', async (_req: Request, res: Response) => {
   try {
     // Wir prüfen, ob der Pool antwortet

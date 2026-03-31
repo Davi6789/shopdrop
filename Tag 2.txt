@@ -1,0 +1,3 @@
+Tag 2 Di.31.03.26
+
+Tag 2 bauen das Frontend — Bun + React + Tailwind + TypeScript. Du wirst dann zum ersten Mal deine Pflanzen im Browser sehen 🌿
