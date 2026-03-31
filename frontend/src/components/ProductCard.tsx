@@ -1,12 +1,15 @@
 // src/components/ProductCard.tsx
 
 import type { Product } from "../types/index"; // oder './types/index'
+import { useCart } from '../context/CartContext';
 
 interface Props {
   product: Product;
 }
 
 export default function ProductCard({ product }: Props) {
+  const { addToCart } = useCart();
+
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
       <img
@@ -29,7 +32,9 @@ export default function ProductCard({ product }: Props) {
             {product.stock} verfügbar
           </span>
         </div>
-        <button className="mt-3 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-xl transition-colors duration-200">
+        <button 
+          onClick={() => addToCart(product)}
+          className="mt-3 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-xl transition-colors duration-200">
           In den Warenkorb
         </button>
       </div>
