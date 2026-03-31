@@ -3,13 +3,12 @@ Hinweis: Standard-Branchname kann sich ändern. Um den Namen des initialen Branc
 Hinweis: zu konfigurieren, der in allen neuen Repositories verwendet werden soll und
 Hinweis: um diese Warnung zu unterdrücken, führen Sie aus:
 Hinweis: 
-Hinweis: 	git config --global init.defaultBranch <Name>
 Hinweis: 
 Hinweis: Häufig gewählte Namen statt 'master' sind 'main', 'trunk' und
 Hinweis: 'development'. Der gerade erstellte Branch kann mit diesem Befehl
 Hinweis: umbenannt werden:
 Hinweis: 
-Hinweis: 	git branch -m <Name>
+
 
 DB löschen
 sudo -u postgres psql
