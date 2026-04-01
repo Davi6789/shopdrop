@@ -216,5 +216,17 @@ shopdrop=# INSERT INTO products (name, description, price, image_url, stock) VAL
 
 prüfe das Ergebnis mit:
 shopdrop=# SELECT id, name, price, image_url FROM products ORDER BY id ASC;
+
 4. GitHub Repository online
+Tag 4 — Abgeschlossen! ✅
+✅ Schritt 1 — Pflanzenbilder mit Unsplash gefixxt
+✅ Schritt 2 — README mit Dokumentation
+✅ Schritt 3 — GitHub Repository online
+
+Was ich in 4 Tagen gebaut habe 🌱
+Tag 1 → PostgreSQL Datenbank + Express Backend + API Routes
+Tag 2 → React Frontend + CartContext + CartDrawer
+Tag 3 → Checkout + Bestellungen in DB speichern + Erfolgsseite
+Tag 4 → Bilder, README, GitHub
+
 5. Bonus Bestellhistorie

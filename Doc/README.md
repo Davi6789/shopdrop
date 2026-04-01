@@ -28,7 +28,7 @@ Gebaut mit React, Node.js und PostgreSQL.
 ### 1. Repository klonen
 
 \`\`\`bash
-git clone https://github.com/DEIN-USERNAME/shopdrop.git
+git clone https://github.com/Davi6789/shopdrop.git
 cd shopdrop
 \`\`\`
 
@@ -87,15 +87,21 @@ Kopiere `.env.example` nach `backend/.env` und fülle diese Werte aus:
 
 \`\`\`
 shopdrop/
-├── frontend/        # React + Tailwind
+├── frontend/        # Bun React + Tailwind + Typescript
 │   └── src/
-│       ├── components/
-│       ├── pages/
-│       ├── context/
-│       └── api/
+│       ├── components/CartDrawer.tsx, ProductCard.tsx
+│       ├── pages/Checkout.tsx, Home.tsx, OrderSuccess.tsx
+│       ├── context/CartContext.tsx
+│       ├── types/index.tsx
+│       └── api/client.ts
+│       └── App.tsx, index.css, main.tsx
+│ 
 ├── backend/         # Express + TypeScript
+│   └── .env, .gitignore, package.json, tsconfig.json
 │   └── src/
-│       ├── routes/
-│       └── db/
+│       ├── db/client.ts, seed.ts, schema.sql, seed.sql, 
+│       └── routes/orders.ts, products.ts
+│       └── index.ts
+│
 └── README.md
 \`\`\`
