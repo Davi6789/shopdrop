@@ -98,3 +98,9 @@ dci-student@Lenovo-V15-G4-IRU:~/Antonio/Projekt/shopdrop$ sudo -u postgres psql 
  public | orders      | table | postgres
  public | products    | table | postgres
 (3 rows)
+
+
+1. Die Datenbank aufräumen (Duplikate löschen)
+   Führe diesen Befehl im Terminal aus:
+
+  => $ TRUNCATE TABLE products RESTART IDENTITY;

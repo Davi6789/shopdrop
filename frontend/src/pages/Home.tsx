@@ -1,3 +1,5 @@
+// frontend/pages/Home.tsx
+
 import { useEffect, useState } from 'react';
 import { getProducts } from '../api/client';
 import type { Product } from '../types/index';

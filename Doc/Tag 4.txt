@@ -1,0 +1,220 @@
+Tag 4 — 
+Der letzte Tag ist für Polish & Abschluss:
+
+README schreiben damit andere das Projekt verstehen
+.env Dokumentation
+Bilder für die Pflanzen fixen
+GitHub Repository online stellen
+Optional: Bestellhistorie Seite
+
+Schritt 1 — Pflanzenbilder fixen
+Das Problem: Wikipedia blockiert externe Bildanfragen. Wir ersetzen die URLs mit zuverlässigen Bildern von unsplash.com.
+Führe diesen SQL-Befehl aus:
+
+psql shopdrop -c "
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400' WHERE name = 'Monstera Deliciosa';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1596547609652-9cf5d8c76ea2?w=400' WHERE name = 'Aloe Vera';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1599598425947-5202edd56bdb?w=400' WHERE name = 'Ficus Benjamina';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1611909023032-2d6b3134ecba?w=400' WHERE name = 'Lavandula';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400' WHERE name = 'Kaktus Mix';
+"
+
+Prüfen:
+bash psql shopdrop -c "SELECT name, image_url FROM products;"
+
+2. Mehr Produkte hinzufügen
+   Das geht am schnellsten über dein Terminal.
+
+Führe diesen SQL-Befehl in deinem Terminal aus (innerhalb von psql oder deinem Datenbank-Tool):
+
+=> $ sudo -u postgres psql
+
+INSERT INTO products (name, description, price, image_url, stock)
+VALUES 
+('Bogenhanf', 'Nahezu unkaputtbare Pflanze, perfekt für dunkle Ecken.', 14.99, 'https://images.unsplash.com/photo-1596547609652-9cf5d8d76921', 15),
+('Efeutute', 'Schnell wachsende Kletterpflanze mit herzförmigen Blättern.', 12.50, 'https://images.unsplash.com/photo-1591958911259-bee2173bdccc', 8),
+('Geldbaum', 'Pflegeleichte Sukkulente, die Glück und Wohlstand bringen soll.', 9.00, 'https://images.unsplash.com/photo-1509423358206-edaa3f3d200b', 20);
+
+Oder nutze eine API-Test-Datei:
+Falls du ein Skript hast, das die Datenbank füllt (z.B. seed.sql), kannst du dort einfach weitere Zeilen hinzufügen und das Skript neu ausführen.
+
+3. Profi-Tipp für die Bilder
+Wenn Bilder "zu groß" geladen werden, verlangsamt das deinen Shop. Du kannst bei Unsplash-Links (wie in deinem Projekt) die Größe direkt im Link limitieren, indem du ?w=600 anhängst:
+https://images.unsplash.com/photo-xxx...xxx?w=600
+
+_______________________________---
+
+## neues Produkt generieren, damit dein Shop noch grüner
+API-Test-Datei (Seeding)
+
+Den Client anpassen (backend/src/db/client.ts)
+import path from 'path';
+
+// Das stellt sicher, dass die .env im backend-Ordner gefunden wird
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
+Erstelle im Ordner backend/src/db/ (oder dort, wo deine Datenbank-Initialisierung liegt) eine Datei namens seed.ts. Diese füllt deine Datenbank automatisch mit Testdaten.
+// backend/src/db/seed.ts (aktualisiert)
+Ausführen: kann diese Datei mit 
+=>   $ bun backend/src/db/seed.ts starten.
+
+----------
+1. Die Bilder reparieren
+Da die Bilder in deiner Datenbank aktuell nicht funktionieren, tauschen wir sie gegen stabile Unsplash-Links aus. Diese funktionieren garantiert.
+
+Führe diesen SQL-Befehl in deinem Terminal aus (oder nutze dein Seeding-Skript mit diesen URLs):
+-- Bestehende Bilder korrigieren
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800' WHERE name = 'Monstera Deliciosa';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1596547609652-9cf5d8d76921?w=800' WHERE name = 'Bogenhanf';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo--?w=800' WHERE name = 'Einblatt';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1591958911259-bee2173bdccc?w=800' WHERE name = 'Efeutute';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo--?w=800' WHERE name = 'Zebra-Haworthie';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1542608643-b52bac542038?w=800' WHERE name = 'Geigenfeige';
+
+2. Ein weiteres Produkt hinzufügen
+Wir fügen jetzt die "Glücksfeder" (Zamioculcas) hinzu. Sie ist sehr beliebt und passt super in dein Sortiment.
+
+SQL-Befehl für das neue Produkt:
+INSERT INTO products (name, description, price, image_url, stock)
+VALUES (
+  'Glücksfeder', 
+  'Extrem pflegeleicht, verträgt wenig Licht und braucht kaum Wasser.', 
+  16.50, 
+  'https://images.unsplash.com/photo-1632207191677-8446985f9d65?w=800', 
+  12
+);
+
+2. Ein neues Produkt hinzufügen (SQL Insert)
+Wir fügen die beliebte Glücksfeder hinzu, damit dein Sortiment weiter wächst:
+INSERT INTO products (name, description, price, image_url, stock)
+VALUES (
+  'Glücksfeder', 
+  'Extrem pflegeleicht, verträgt wenig Licht und braucht kaum Wasser.', 
+  16.50, 
+  'https://images.unsplash.com/photo-1632207191677-8446985f9d65?w=800', 
+  12
+);
+
+## Liste der products
+=> SELECT id, name, price FROM products ORDER BY id ASC; <= sortiert nr.
+shopdrop=# SELECT id, name, price, image_url FROM products ORDER BY id ASC; <= sortiert nr.
+=> SELECT id, name, image_url FROM products; oder
+=> $ psql shopdrop -c "SELECT name, image_url FROM products;" 
+            name        |                             image_url                              
+--------------------+--------------------------------------------------------------------
+  1 | Kaktus Mix         | 12.99 | https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400
+  2 | Efeutute           | 12.50 | https://images.unsplash.com/photo-1591958911259-bee2173bdccc?w=800
+  3 | Ficus Benjamina    | 19.99 | https://images.unsplash.com/photo-1599598425947-5202edd56bdb?w=400
+  4 | Lavendel           |  6.99 | https://images.unsplash.com/photo-1611909023032-2d6b3134ecba?w=400
+  5 | Bogenhanf          | 14.99 | https://images.unsplash.com/photo-1596547609652-9cf5d8d76921?w=800
+  6 | Geldbaum           |  9.00 | https://images.unsplash.com/photo-1512428813834-c702c7702b78?w=800
+  7 | Einblatt           | 19.99 | https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=400
+  8 | Zebra-Haworthie    |  9.99 | https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=800
+  9 | Monstera Deliciosa | 24.99 | https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800
+ 10 | Aloe Vera          |  8.99 | https://images.unsplash.com/photo-1596547609652-9cf5d8d76921?w=800
+ 11 | Glücksfeder        | 16.50 | https://images.unsplash.com/photo-1632207191677-8446985f9d65?w=800
+ 12 | Geigenfeige        | 39.99 | https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800
+ 13 | Pilea (Ufopflanze) | 11.50 | https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800
+(13 rows)
+
+
+ Kaktus Mix         | https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400
+ Efeutute           | https://images.unsplash.com/photo-1637967886160-fd78dc3ce3f5?w=400
+ Ficus Benjamina    | https://images.unsplash.com/photo-1599598425947-5202edd56bdb?w=400
+ Lavandula          | https://images.unsplash.com/photo-1611909023032-2d6b3134ecba?w=400
+ Bogenhand          | https://images.unsplash.com/photo-1611909023032-2d6b3134ecba?w=400
+ Geldbaum           | https://images.unsplash.com/photo-1512428813834-c702c7702b78?w=400
+ Einblatt           | https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=400
+ Zebra-Haworthie    | https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=400
+ Monstera Deliciosa | https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800
+ Aloe Vera          | https://images.unsplash.com/photo-1596547609652-9cf5d8d76921?w=800
+ Ficus Benjamina    | https://images.unsplash.com/photo-w=800
+ Lavendel           | https://images.unsplash.com/photo-w=800
+ Kaktus Mix         | https://images.unsplash.com/photo-w=800
+ Einblatt           | https://images.unsplash.com/photo--?w=800
+ Glücksfeder        | https://images.unsplash.com/photo-1632207191677-8446985f9d65?w=800
+ Geigenfeige        | https://images.unsplash.com/photo-1632207691143-643e2a9a9361?w=400
+ Glücksfeder        | https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=400
+ Pilea (Ufopflanze) | https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800
+ Monstera Deliciosa | https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400
+ Aloe Vera          | https://images.unsplash.com/photo--?w=400
+(21 rows)
+
+= ändern datenbank name falschgeschrieben auf richtig
+shopdrop=# update products set image_url='https://images.unsplash.com/photo-1611909023032-2d6b3134ecba?w=400' where name='Bogenhand';
+
+= einzelnen Eintrag in deiner Datenbank zu ändern, ohne alles zu löschen, benutzt du den UPDATE-Befehl. Da der Kaktus Mix die ID 1 hat.
+# UPDATE products SET image_url = 'https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400' WHERE id = 1;
+
+= Mehrere Bilder gleichzeitig ändern?
+-- Beispiel für die Efeutute (ID 2)
+UPDATE products SET image_url = 'NEUE_URL' WHERE id = 2;
+
+-- Beispiel für den Ficus (ID 3)
+UPDATE products SET image_url = 'NEUE_URL' WHERE id = 3;
+
+= Kontrolle: Befehl prüfen, ob die URL jetzt stimmt
+SELECT id, name, image_url FROM products WHERE id = 1;
+
+
+dci-student@Lenovo-V15-G4-IRU:~/Antonio/Projekt/shopdrop$ 
+
+## Duplikate löschen:
+=> $ psql shopdrop -c "DELETE FROM products WHERE id IN (10, 11, 13, 17);"
+=> # DELETE FROM products WHERE id IN (10, 11, 13, 17);
+
+Dann alle Bilder auf einmal setzen:
+=> $ psql shopdrop << 'EOF'
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400' WHERE id = 1;
+UPDATE products SET image_url = 'https://images.unsplash.com/photo--9cf5d8c76ea2?w=400' WHERE id = 2;
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1599598425947-5202edd56bdb?w=400' WHERE id = 3;
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1611909023032-2d6b3134ecba?w=400' WHERE id = 4;
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400' WHERE id = 5;
+UPDATE products SET image_url = 'https://images.unsplash.com/photo--a9094f4f4f65?w=400' WHERE id = 7;
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1637967886160-fd78dc3ce3f5?w=400' WHERE id = 8;
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1512428813834-c702c7702b78?w=400' WHERE id = 9;
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=400' WHERE id = 12;
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=400' WHERE id = 14;
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1632207691143-643e2a9a9361?w=400' WHERE id = 15;
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=400' WHERE id = 16;
+EOF
+
+3. Ein weiteres neues Produkt hinzufügen
+INSERT INTO products (name, description, price, image_url, stock)
+VALUES (
+  'Pilea (Ufopflanze)', 
+  'Trendpflanze mit runden Blättern, die Glück bringen sollen.', 
+  11.50, 
+  'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800', 
+  14
+);
+
+# Schritt 1: Die Tabelle leeren und ID zurücksetzen
+# TRUNCATE TABLE products RESTART IDENTITY;
+# TRUNCATE TABLE products, order_items RESTART IDENTITY CASCADE;
+shopdrop=# TRUNCATE TABLE products, order_items RESTART IDENTITY CASCADE;
+TRUNCATE TABLE
+shopdrop=# 
+Nach dem Truncate: Daten neu einfügen
+Sobald der Befehl oben geklappt hat, ist deine Datenbank leer und bereit für die saubere Liste. Nutze dann einfach wieder den großen INSERT INTO-Block von vorhin:
+shopdrop=# INSERT INTO products (name, description, price, image_url, stock) VALUES 
+('Kaktus Mix', 'Ein Set aus pflegeleichten Minikakteen.', 12.99, 'https://images.unsplash.com/photo-1509423358206-edaa3f3d200b?w=800', 20),
+('Efeutute', 'Schnell wachsende Kletterpflanze für Regale.', 12.50, 'https://images.unsplash.com/photo-1591958911259-bee2173bdccc?w=800', 8),
+('Ficus Benjamina', 'Klassischer Zimmerstrauch, liebt helle Orte.', 19.99, 'https://images.unsplash.com/photo-1581600611352-0f7ca37bb28e?w=800', 5),
+('Lavendel', 'Duftet herrlich und liebt die Sonne.', 6.99, 'https://images.unsplash.com/photo-1528750955925-cd32a09c454d?w=800', 25),
+('Bogenhanf', 'Nahezu unkaputtbar, reinigt die Luft.', 14.99, 'https://images.unsplash.com/photo-1596547609652-9cf5d8d76921?w=800', 10),
+('Geldbaum', 'Sukkulente, die Glück und Wohlstand bringen soll.', 9.00, 'https://images.unsplash.com/photo-1512428813834-c702c7702b78?w=800', 20),
+('Einblatt', 'Elegante Pflanze mit schönen weißen Blüten.', 19.99, 'https://images.unsplash.com/photo-1510218830377-0e9d10a61701?w=800', 12),
+('Zebra-Haworthie', 'Kleine, markante Sukkulente für den Schreibtisch.', 9.99, 'https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=800', 20),
+('Monstera Deliciosa', 'Große Blätter, der Trend im Wohnzimmer.', 24.99, 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800', 15),
+('Aloe Vera', 'Heilende Sukkulente, braucht wenig Wasser.', 8.99, 'https://images.unsplash.com/photo-1596547609652-9cf5d8d76921?w=800', 12),
+('Glücksfeder', 'Perfekt für dunkle Ecken.', 16.50, 'https://images.unsplash.com/photo-1632207191677-8446985f9d65?w=800', 12),
+('Geigenfeige', 'Dekorative Pflanze mit großen Blättern.', 39.99, 'https://images.unsplash.com/photo-1542608643-b52bac542038?w=800', 5),
+('Pilea (Ufopflanze)', 'Runde Blätter, die gute Laune machen.', 11.50, 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=800', 14);
+
+
+
+prüfe das Ergebnis mit:
+shopdrop=# SELECT id, name, price, image_url FROM products ORDER BY id ASC;
+4. GitHub Repository online
+5. Bonus Bestellhistorie

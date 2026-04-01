@@ -62,8 +62,8 @@ return (
         open={cartOpen}
         onClose={() => setCartOpen(false)}
         onCheckout={() => {
-          setCartOpen(false);
-          setPage('checkout');
+          setCartOpen(false);   // Warenkorb schließen
+          setPage('checkout');  // Zur Kasse wechseln
         }}
       />
     </div>

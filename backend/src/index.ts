@@ -12,6 +12,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; img-src 'self' https: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
+  );
+  next();
+});
+
 // CORS Konfiguration
 app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
@@ -24,6 +32,7 @@ app.use('/orders', ordersRouter);              // ← neu
 app.get('/', (req: Request, res: Response) => {
   res.send('Willkommen beim ShopDrop API-Server! 🚀');
 });
+
 // 2. Health-Check Route
 app.get('/health', async (_req: Request, res: Response) => {
   try {

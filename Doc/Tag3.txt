@@ -71,3 +71,18 @@ Und den Button unten im Drawer:
 >
   Zur Kasse →
 </button>
+
+cd ~/Antonio/Projekt/shopdrop
+git add .
+git commit -m "Tag 3: Checkout, POST /orders, Erfolgsseite fertig"
+```
+
+---
+
+## Was man in 3 Tagen gebaut hat
+```
+✅ Tag 1 — PostgreSQL Datenbank, Express Backend, API Routes
+✅ Tag 2 — React Frontend, ProductList, CartContext, CartDrawer  
+✅ Tag 3 — Checkout Formular, Bestellung in DB speichern, Erfolgsseite
+
+Das ist ein echter Fullstack-Shop mit echten Daten! 💪

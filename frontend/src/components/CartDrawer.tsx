@@ -1,4 +1,4 @@
-// src/components/CartDrawer.tsx
+// frontend/src/components/CartDrawer.tsx
 
 import { useCart } from "../context/CartContext";
 

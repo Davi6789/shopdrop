@@ -1,6 +1,6 @@
 
 
-Tag 1 hat 5 Schritte. Wir gehen einen nach dem anderen durch:
+Tag 1 hat 5 Schritte:
 ✅ Schritt 1 — Repo & Ordnerstruktur
 ✅ Schritt 2 — Express Server + DB-Verbindung
 
@@ -14,7 +14,7 @@ bun add -D @types/pg
 // src/index.tsx
 backend/.env
 PORT=3001
-DATABASE_URL=postgresql://dci-student@localhost:5432/shopdrop
+DATABASE_URL=postgresql://dci-student:Dci123456@localhost:5432/shopdrop
 FRONTEND_URL=http://localhost:3000
 🔄 Schritt 3 — schema.sql (sind wir gerade)
 psql -c "CREATE DATABASE shopdrop;"

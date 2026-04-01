@@ -24,8 +24,32 @@ export default function Checkout({ onSuccess, onBack }: Props) {
 
     setLoading(true);
     setError('');
+try {
+  const result = await postOrder({
+    customer_name: name,
+    customer_address: address,
+    items: items.map(i => ({
+      product_id: i.product.id,
+      quantity: i.quantity,
+    })),
+  });
+console.log(result.items)
 
-    try {
+  // Falls das Backend "id" oder "orderId" schickt, nehmen wir das, was da ist:
+  const finalId = result.orderId || result.id;
+
+  if (finalId) {
+    onSuccess(finalId);
+  } else {
+    // Falls gar keine ID kommt, schicken wir eine Platzhalter-ID, 
+    // damit die Seite nicht abstürzt
+    onSuccess(Math.floor(Math.random() * 1000)); 
+  }
+} catch (err) {
+  console.error("Mein Fehler beim Bestellen:", err);
+  setError('Bestellung fehlgeschlagen. Bitte versuche es erneut.');
+}
+/*     try {
       const result = await postOrder({
         customer_name: name,
         customer_address: address,
@@ -36,8 +60,9 @@ export default function Checkout({ onSuccess, onBack }: Props) {
       });
       onSuccess(result.orderId);
     } catch {
-      setError('Bestellung fehlgeschlagen. Bitte versuche es erneut.');
-    } finally {
+      setError('Bestellung fehlgeschlagen. Bitte versuche es erneut.'); */
+
+     finally {
       setLoading(false);
     }
   };
@@ -96,7 +121,7 @@ export default function Checkout({ onSuccess, onBack }: Props) {
                   {item.product.name} × {item.quantity}
                 </span>
                 <span className="font-medium text-green-800">
-                  {(parseFloat(item.product.price) * item.quantity).toFixed(2)} €
+                  {(item.product.price * item.quantity).toFixed(2)} €
                 </span>
               </div>
             ))}

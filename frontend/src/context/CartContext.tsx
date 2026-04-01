@@ -1,6 +1,6 @@
 // src/context/CartContext.tsx
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState } from "react";
 import type { Product } from "../types";
 import type { CartItem } from "../types";
 
@@ -14,9 +14,9 @@ interface CartContextType {
   clearCart: () => void;
 }
 
-const CartContext = createContext<CartContextType | null>(null);
+const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export function CartProvider({ children }: { children: ReactNode }) {
+export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
 
   const addToCart = (product: Product) => {
@@ -49,7 +49,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
   const totalPrice = items.reduce(
-    (sum, i) => sum + parseFloat(i.product.price) * i.quantity,
+    (sum, i) => sum + (i.product.price) * i.quantity,
     0,
   );
 
@@ -70,7 +70,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useCart() {
+export const useCart=()=> {
   const ctx = useContext(CartContext);
   if (!ctx)
     throw new Error("useCart muss innerhalb von CartProvider verwendet werden");
