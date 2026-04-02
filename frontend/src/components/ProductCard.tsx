@@ -1,7 +1,8 @@
 // frontend/src/components/ProductCard.tsx
 
 import type { Product } from "../types/index"; // oder './types/index'
-import { useCart } from '../context/CartContext';
+import { useCart } from "../context/CartContext";
+import { motion } from 'framer-motion';
 
 interface Props {
   product: Product;
@@ -10,20 +11,21 @@ interface Props {
 export default function ProductCard({ product }: Props) {
   const { addToCart } = useCart();
 
-return (
+  return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full">
       {/* Bild-Container mit fester Ratio */}
-<div className="relative aspect-video w-full overflow-hidden bg-gray-100">
-  <img
-    src={product.image_url}
-    alt={product.name}
-    className="w-full h-full object-cover object-center" 
-    onError={(e) => {
-      // Falls ein Link kaputt ist, zeigt er ein Ersatzbild
-      (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x300?text=Pflanze+kommt+bald';
-    }}
-  />
-</div>
+      <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
+        <img
+          src={product.image_url}
+          alt={product.name}
+          className="w-full h-full object-cover object-center"
+          onError={(e) => {
+            // Falls ein Link kaputt ist, zeigt er ein Ersatzbild
+            (e.target as HTMLImageElement).src =
+              "https://via.placeholder.com/400x300?text=Pflanze+kommt+bald";
+          }}
+        />
+      </div>
 
       {/* Content-Bereich mit flex-1, damit er den Raum füllt */}
       <div className="p-4 flex flex-col flex-1">
@@ -43,12 +45,16 @@ return (
           </span>
         </div>
 
-        <button 
+        <motion.button
+          /*           onClick={() => addToCart(product)}
+          className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2.5 rounded-xl font-medium transition-colors shadow-sm active:scale-95" */
+          whileTap={{ scale: 0.95 }} // Beim Draufdrücken wird er etwas kleiner
+          whileHover={{ scale: 1.02 }} // Beim Drüberfahren minimal größer
           onClick={() => addToCart(product)}
-          className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2.5 rounded-xl font-medium transition-colors shadow-sm active:scale-95"
+          className="bg-green-600 text-white w-full py-2 rounded-xl"
         >
           In den Warenkorb
-        </button>
+        </motion.button>
       </div>
     </div>
   );

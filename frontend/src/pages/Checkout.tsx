@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';  // ← neu
 import { postOrder } from '../api/client';
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 
 export default function Checkout({ onSuccess, onBack }: Props) {
   const { items, totalPrice } = useCart();
+    const { token } = useAuth();  // ← neu
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [loading, setLoading] = useState(false);
@@ -19,50 +21,37 @@ export default function Checkout({ onSuccess, onBack }: Props) {
   const handleSubmit = async () => {
     if (!name.trim() || !address.trim()) {
       setError('Bitte Name und Adresse ausfüllen.');
+      
       return;
     }
 
     setLoading(true);
     setError('');
-try {
-  const result = await postOrder({
-    customer_name: name,
-    customer_address: address,
-    items: items.map(i => ({
-      product_id: i.product.id,
-      quantity: i.quantity,
-    })),
-  });
-console.log(result.items)
 
-  // Falls das Backend "id" oder "orderId" schickt, nehmen wir das, was da ist:
-  const finalId = result.orderId || result.id;
-
-  if (finalId) {
-    onSuccess(finalId);
-  } else {
-    // Falls gar keine ID kommt, schicken wir eine Platzhalter-ID, 
-    // damit die Seite nicht abstürzt
-    onSuccess(Math.floor(Math.random() * 1000)); 
-  }
-} catch (err) {
-  console.error("Mein Fehler beim Bestellen:", err);
-  setError('Bestellung fehlgeschlagen. Bitte versuche es erneut.');
-}
-/*     try {
+    try {
       const result = await postOrder({
         customer_name: name,
         customer_address: address,
         items: items.map(i => ({
           product_id: i.product.id,
           quantity: i.quantity,
-        })),
-      });
-      onSuccess(result.orderId);
-    } catch {
-      setError('Bestellung fehlgeschlagen. Bitte versuche es erneut.'); */
+    })),
+    }, token);  // ← token mitgeben
 
-     finally {
+    /* console.log(result.items) */
+       // Falls das Backend "id" oder "orderId" schickt, nehmen wir das, was da ist:
+      const finalId = result.orderId || result.id;
+      if (finalId) {
+        onSuccess(finalId);
+      } else {
+    // Falls gar keine ID kommt, schicken wir eine Platzhalter-ID, 
+    // damit die Seite nicht abstürzt
+        onSuccess(Math.floor(Math.random() * 1000)); 
+    }
+    } catch (err) {
+      console.error("Mein Fehler beim Bestellen:", err);
+      setError('Bestellung fehlgeschlagen. Bitte logge dich zuerst ein.');
+    } finally {
       setLoading(false);
     }
   };
@@ -94,7 +83,6 @@ console.log(result.items)
               className="w-full border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
             />
           </div>
-
           <div>
             <label className="block text-sm text-gray-600 mb-1">Adresse</label>
             <textarea

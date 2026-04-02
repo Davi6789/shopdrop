@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 import pool from './db/client'; // Stelle sicher, dass die Datei in src/db/client.ts liegt!
 import productsRouter from './routes/products';
 import ordersRouter from './routes/orders';   // ← neu
+import authRouter from './routes/auth';          // ← neu
+import adminRouter from './routes/admin';   // ← neu
 
 dotenv.config();
 
@@ -27,6 +29,8 @@ app.use(express.json());
 // --- HIER DIE ROUTEN REGISTRIEREN ---
 app.use('/products', productsRouter);
 app.use('/orders', ordersRouter);              // ← neu
+app.use('/auth', authRouter);                    // ← neu
+app.use('/admin', adminRouter);             // ← neu admin
 
 // 1. Die richtige Root-Route für http://localhost:3001/
 app.get('/', (req: Request, res: Response) => {
