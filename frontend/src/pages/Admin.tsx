@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-
+import { motion, AnimatePresence } from "framer-motion"; // Korrekter Import motion
 
 interface Product {
   id: number;
@@ -150,9 +150,12 @@ export default function Admin({ onBack }: Props) {
       )}
 
       {/* Neues Produkt Formular */}
-      
+      <AnimatePresence>
         {showAddForm && (
-          <div
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
             className="bg-white rounded-2xl shadow-md p-6 mb-6 overflow-hidden"
           >
             <h2 className="font-semibold text-green-900 text-lg mb-4">
@@ -242,12 +245,15 @@ export default function Admin({ onBack }: Props) {
             >
               Produkt speichern
             </button>
-          </div>
+          </motion.div>
         )}
-      
+      </AnimatePresence>
 
-      {/* Produkttabelle mit Animation */}
-      <div
+      {/* Animation für die Tabelle */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
         className="bg-white rounded-2xl shadow-md overflow-hidden"
       >
         <table className="w-full text-sm">
@@ -380,7 +386,7 @@ export default function Admin({ onBack }: Props) {
             ))}
           </tbody>
         </table>
-      </div>
+      </motion.div>
     </div>
   );
 }

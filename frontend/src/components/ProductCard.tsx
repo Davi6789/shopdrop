@@ -1,8 +1,9 @@
 // frontend/src/components/ProductCard.tsx
 
+import { useNavigate, Link } from "react-router-dom";
 import type { Product } from "../types/index"; // oder './types/index'
 import { useCart } from "../context/CartContext";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 interface Props {
   product: Product;
@@ -10,28 +11,34 @@ interface Props {
 
 export default function ProductCard({ product }: Props) {
   const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-      {/* Bild-Container mit fester Ratio */}
-      <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
-        <img
-          src={product.image_url}
-          alt={product.name}
-          className="w-full h-full object-cover object-center"
-          onError={(e) => {
-            // Falls ein Link kaputt ist, zeigt er ein Ersatzbild
-            (e.target as HTMLImageElement).src =
-              "https://via.placeholder.com/400x300?text=Pflanze+kommt+bald";
-          }}
-        />
-      </div>
-
+      {/* NEU: Link um das Bild legen */}
+      <Link to={`/products/${product.id}`} className="cursor-pointer group">
+        {/* Bild-Container mit fester Ratio */}
+        <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
+          <img
+            src={product.image_url}
+            alt={product.name}
+            className="w-full h-full object-cover object-center"
+            onError={(e) => {
+              // Falls ein Link kaputt ist, zeigt er ein Ersatzbild
+              (e.target as HTMLImageElement).src =
+                "https://via.placeholder.com/400x300?text=Pflanze+kommt+bald";
+            }}
+          />
+        </div>
+      </Link>
       {/* Content-Bereich mit flex-1, damit er den Raum füllt */}
       <div className="p-4 flex flex-col flex-1">
+        {/* NEU: Link um den Namen legen */}
+        <Link to={`/products/${product.id}`}>
         <h2 className="text-lg font-semibold text-green-900 line-clamp-1">
           {product.name}
         </h2>
+        </Link>
         <p className="text-sm text-gray-500 mt-1 line-clamp-2 flex-1">
           {product.description}
         </p>
